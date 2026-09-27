@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta de Bienvenida Corporativa</title>
+    <style>
+        :root {
+            --primary: #0f2c59;
+            --secondary: #337ccf;
+            --bg: #f4f6f9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: #fff;
+            border-bottom: 4px solid var(--secondary);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo-box img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+        .logo-box h1 {
+            font-size: 20px;
+            color: var(--primary);
+            margin: 0;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .carta {
+            background: #fff;
+            width: 100%;
+            max-width: 750px;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-top: 6px solid var(--primary);
+        }
+        .carta h2 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 12px;
+        }
+        .info-destinatario {
+            background: #f8fafc;
+            border-left: 4px solid var(--secondary);
+            padding: 12px 18px;
+            margin: 20px 0;
+        }
+        .texto-mensaje {
+            line-height: 1.8;
+            color: #4b5563;
+            text-align: justify;
+            margin: 20px 0;
+        }
+        .firma {
+            margin-top: 40px;
+            border-top: 1px solid #eaeaea;
+            padding-top: 20px;
+        }
+        .firma p { margin: 4px 0; }
+        .nombre-firma {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        footer {
+            background: var(--primary);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+        footer p { margin: 4px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-box">
+            <img id="logo" src="" alt="Logo">
+            <h1 id="empresa-nombre">Cargando...</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="carta">
+            <h2>Notificación de Ingreso y Bienvenida</h2>
+            
+            <div class="info-destinatario">
+                <p><strong>A quien va dirigido:</strong> <span id="destinatario"></span></p>
+                <p><strong>Puesto:</strong> <span id="puesto"></span> | <strong>Departamento:</strong> <span id="depto"></span></p>
+            </div>
+
+            <p class="texto-mensaje" id="mensaje"></p>
+
+            <div class="firma">
+                <p>Atentamente,</p>
+                <p class="nombre-firma" id="remitente"></p>
+                <p id="cargo" style="color: #6b7280; font-size: 14px;"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p id="f-nombre"></p>
+        <p id="f-dir"></p>
+        <p id="f-cont"></p>
+    </footer>
+
+    <script>
+        // Lee el archivo JSON local y pinta los datos en la página
+        fetch('datos.json')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('logo').src = data.empresa.logo || '';
+                document.getElementById('empresa-nombre').textContent = data.empresa.nombre || 'Empresa';
+                
+                document.getElementById('destinatario').textContent = data.bienvenida.destinatario || 'N/D';
+                document.getElementById('puesto').textContent = data.bienvenida.puesto || 'N/D';
+                document.getElementById('depto').textContent = data.bienvenida.departamento || 'N/D';
+                document.getElementById('mensaje').textContent = data.bienvenida.mensaje || 'N/D';
+                document.getElementById('remitente').textContent = data.bienvenida.remitente || 'N/D';
+                document.getElementById('cargo').textContent = data.bienvenida.cargoRemitente || 'N/D';
+
+                document.getElementById('f-nombre').textContent = data.empresa.nombre || '';
+                document.getElementById('f-dir').textContent = data.empresa.direccion || '';
+                document.getElementById('f-cont').textContent = data.empresa.contacto || '';
+            })
+            .catch(err => {
+                console.error("Error al cargar los datos:", err);
+                alert("Error al cargar el archivo de datos.");
+            });
+    </script>
+</body>
+</html>

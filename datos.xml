@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<univive>
+    <empresa>
+        <nombre>Univive S.A. de C.V.</nombre>
+        <logo>logo.jpeg</logo>
+        <direccion>Corporativo Univive, Av. Tecnológico #500, Estado de México</direccion>
+        <contacto>contacto@univive.com | Tel: 55-9876-5432</contacto>
+    </empresa>
+    <bienvenida>
+        <destinatario>Ing. Vanessa Joselin Zamora Leyva</destinatario>
+        <puesto>Desarrolladora de Software y Sistemas</puesto>
+        <departamento>Tecnologías de la Información</departamento>
+        <mensaje>Es un honor darte la más cordial bienvenida a Univive.</mensaje>
+        <remitente>Lic. Marcela Ruiz Castañeda</remitente>
+        <cargoRemitente>Directora de Gestión de Talento Univive</cargoRemitente>
+    </bienvenida>
+</univive>
