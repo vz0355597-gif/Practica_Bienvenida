@@ -11,36 +11,13 @@
             --bg: #f4f6f9;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: #333;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        header {
-            background: #fff;
-            border-bottom: 4px solid var(--secondary);
-            padding: 20px 40px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .logo-box img {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
-        }
-        .logo-box h1 {
-            font-size: 20px;
-            color: var(--primary);
-            margin: 0;
+    font-family: 'Georgia', 'Times New Roman', serif; 
+    background-color: var(--bg);
+    color: #2b2b2b;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
         }
         main {
             flex: 1;
@@ -57,6 +34,28 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border-top: 6px solid var(--primary);
+        }
+        /* Logo alineado*/
+        .header-logo {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .header-logo img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+        .divider {
+            border: none;
+            border-top: 1px solid #eaeaea;
+            margin-bottom: 20px;
+        }
+        /* Fecha alineada*/
+        .fecha-box {
+            text-align: right;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 25px;
         }
         .carta h2 {
             color: var(--primary);
@@ -98,26 +97,44 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo-box">
-            <img id="logo" src="" alt="Logo">
-            <h1 id="empresa-nombre">Cargando...</h1>
-        </div>
-    </header>
-
     <main>
         <div class="carta">
-            <h2>Notificación de Ingreso y Bienvenida</h2>
+    <!-- Encabezado con Logo -->
+    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 15px; margin-bottom: 10px;">
+    <h2 id="empresa-nombre" style="color: #0f2c59; margin: 0; font-size: 20px; text-align: right;">Univive S.A. de C.V.</h2>
+    <div class="header-logo" style="margin: 0;">
+        <img id="logo" src="logo.jpeg" alt="Logo" style="width: 50px; height: 50px; object-fit: contain;">
+    </div>
+</div>
+<hr class="divider">
+    <!-- Fecha -->
+    <div class="fecha-box" id="fecha">
+        Ciudad de México, 27 de septiembre de 2026
+    </div>
             
             <div class="info-destinatario">
                 <p><strong>A quien va dirigido:</strong> <span id="destinatario"></span></p>
-                <p><strong>Puesto:</strong> <span id="puesto"></span> | <strong>Departamento:</strong> <span id="depto"></span></p>
+                <p><strong>Puesto:</strong> <span id="puesto"></span> 
+                <p></p>   <strong>Departamento:</strong> <span id="depto"></span></p>
             </div>
 
-            <p class="texto-mensaje" id="mensaje"></p>
+            <div class="texto-mensaje">
+    <!-- El saludo-->
+    <p id="saludo" style="font-family: 'Georgia', serif; font-style: italic; font-weight: bold; font-size: 16px; color: #111; margin-bottom: 15px;"></p>
+    
+    <!-- El cuerpo del mensaje abajo -->
+    <p id="mensaje"></p>
+</div>
 
             <div class="firma">
-                <p>Atentamente,</p>
+    <p>Atentamente,</p>
+    <!-- AQUÍ AGREGAMOS LA IMAGEN DE LA FIRMA -->
+    <div>
+        <img id="firma-img" src="marcela.jpg" alt="Firma" style="max-height: 50px; margin: 5px 0; object-fit: contain;">
+    </div>
+    <p class="nombre-firma" id="remitente"></p>
+    <p id="cargo" style="color: #6b7280; font-size: 14px;"></p>
+</div>
                 <p class="nombre-firma" id="remitente"></p>
                 <p id="cargo" style="color: #6b7280; font-size: 14px;"></p>
             </div>
@@ -131,28 +148,34 @@
     </footer>
 
     <script>
-        // Lee el archivo JSON local y pinta los datos en la página
-        fetch('datos.json')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('logo').src = data.empresa.logo || '';
-                document.getElementById('empresa-nombre').textContent = data.empresa.nombre || 'Empresa';
-                
-                document.getElementById('destinatario').textContent = data.bienvenida.destinatario || 'N/D';
-                document.getElementById('puesto').textContent = data.bienvenida.puesto || 'N/D';
-                document.getElementById('depto').textContent = data.bienvenida.departamento || 'N/D';
-                document.getElementById('mensaje').textContent = data.bienvenida.mensaje || 'N/D';
-                document.getElementById('remitente').textContent = data.bienvenida.remitente || 'N/D';
-                document.getElementById('cargo').textContent = data.bienvenida.cargoRemitente || 'N/D';
+        // Esta es la línea clave del fetch que puedes borrar y volver a pegar en tu presentación
+       fetch('http://localhost:3000/api/bienvenida/json')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('logo').src = 'logo.jpeg';
+            
+            // Aquí lee el nombre de la empresa que te está mandando tu server.js
+            // (Asegúrate de cambiar 'nombre' por la variable exacta que tenga tu JSON, ej: data.empresa.nombre o data.nombre)
+            document.getElementById('empresa-nombre').textContent = data.empresa.nombre || 'Univive S.A. de C.V.';
+            
+            if(data.bienvenida.fecha) {
+                document.getElementById('fecha').textContent = data.bienvenida.fecha;
+            }
+            
+            // Limpiamos el título profesional (Ing., Lic., etc.) para agarrar únicamente tu nombre
+let nombreCompleto = data.bienvenida.destinatario || '';
+let nombreLimpio = nombreCompleto.replace(/^(Ing\.|Lic\.|Dr\.|Mtro\.|C\.)\s*/i, '');
+let primerNombre = nombreLimpio.split(' ')[0] || 'Vanessa';
 
-                document.getElementById('f-nombre').textContent = data.empresa.nombre || '';
-                document.getElementById('f-dir').textContent = data.empresa.direccion || '';
-                document.getElementById('f-cont').textContent = data.empresa.contacto || '';
-            })
-            .catch(err => {
-                console.error("Error al cargar los datos:", err);
-                alert("Error al cargar el archivo de datos.");
-            });
+            document.getElementById('destinatario').textContent = data.bienvenida.destinatario || '';
+            document.getElementById('puesto').textContent = data.bienvenida.puesto || '';
+            document.getElementById('depto').textContent = data.bienvenida.departamento || '';
+            document.getElementById('saludo').textContent = "Estimado(a) " + primerNombre + ":";
+            document.getElementById('mensaje').textContent = data.bienvenida.mensaje || '';
+            document.getElementById('remitente').textContent = data.bienvenida.remitente || '';
+            document.getElementById('cargo').textContent = data.bienvenida.cargoRemitente || '';
+        })
+        .catch(err => console.error("Error:", err));
     </script>
 </body>
 </html>

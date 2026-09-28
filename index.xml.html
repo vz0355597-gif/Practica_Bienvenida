@@ -137,35 +137,36 @@
     </footer>
 
     <script>
-        // Leemos el archivo XML utilizando DOMParser para extraer por etiquetas
-        fetch('datos.xml')
-            .then(res => res.text())
-            .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-            .then(xml => {
-                const getVal = (tag) => {
-                    const el = xml.getElementsByTagName(tag)[0];
-                    return el ? el.textContent : '';
-                };
+        // Debe apuntar al endpoint de tu servidor de Node.js
+fetch('http://localhost:3000/api/bienvenida/xml')
+    .then(res => res.text())
+    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    .then(xml => {
+        const getVal = (tag) => {
+            const el = xml.getElementsByTagName(tag)[0];
+            return el ? el.textContent : '';
+        };
 
-                document.getElementById('logo').src = getVal('logo');
-                document.getElementById('empresa-nombre').textContent = getVal('nombre');
-                
-                document.getElementById('destinatario').textContent = getVal('destinatario');
-                document.getElementById('puesto').textContent = getVal('puesto');
-                document.getElementById('depto').textContent = getVal('departamento');
-                document.getElementById('mensaje').textContent = getVal('mensaje');
-                document.getElementById('remitente').textContent = getVal('remitente');
-                document.getElementById('cargo').textContent = getVal('cargoRemitente');
-                document.getElementById('firmaImg').src = getVal('firma');
+        // Logo y Firma directo con el nombre de tu archivo local
+        document.getElementById('logo').src = 'logo.jpeg';
+        document.getElementById('empresa-nombre').textContent = getVal('nombre');
+        
+        document.getElementById('destinatario').textContent = getVal('destinatario');
+        document.getElementById('puesto').textContent = getVal('puesto');
+        document.getElementById('depto').textContent = getVal('departamento');
+        document.getElementById('mensaje').textContent = getVal('mensaje');
+        document.getElementById('remitente').textContent = getVal('remitente');
+        document.getElementById('cargo').textContent = getVal('cargoRemitente');
+        document.getElementById('firmaImg').src = 'firma.jpeg'; // Cambia 'firma.jpeg' por el nombre real de tu archivo de firma si aplica
 
-                document.getElementById('f-nombre').textContent = getVal('nombre');
-                document.getElementById('f-dir').textContent = getVal('direccion');
-                document.getElementById('f-cont').textContent = getVal('contacto');
-            })
-            .catch(err => {
-                console.error("Error al cargar el XML:", err);
-                alert("Error al cargar el archivo XML.");
-            });
+        document.getElementById('f-nombre').textContent = getVal('nombre');
+        document.getElementById('f-dir').textContent = getVal('direccion');
+        document.getElementById('f-cont').textContent = getVal('contacto');
+    })
+    .catch(err => {
+        console.error("Error al cargar el XML:", err);
+        alert("Error al cargar el archivo XML.");
+    });
     </script>
 </body>
 </html>

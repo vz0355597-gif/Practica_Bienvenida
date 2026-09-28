@@ -6,10 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. Conexión a MongoDB (asegúrate de tener MongoDB Compass o local activo, o usa MongoDB Atlas)
+// 1. Conexión a MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/univive_db')
 
-// 2. Definir el Esquema y Modelo de la Base de Datos
+// 2. Definimos esquema y la base de datos aqui
 const bienvenidaSchema = new mongoose.Schema({
     empresa: {
         nombre: String,
@@ -36,18 +36,18 @@ app.get('/api/inicializar', async (req, res) => {
     const nuevoRegistro = new UniviveModel({
         empresa: {
             nombre: "Univive S.A. de C.V.",
-            logo: "logo.png",
+            logo: "logo.jpeg",
             direccion: "Corporativo Univive, Av. Tecnológico #500, Estado de México",
             contacto: "contacto@univive.com | Tel: 55-9876-5432"
         },
         bienvenida: {
-            destinatario: "Ing. Vanessa Joselin Zamora Leyva",
+            destinatario: "Ing. Zamora Leyva Vanessa Joselin",
             puesto: "Desarrolladora de Software y Sistemas",
             departamento: "Tecnologías de la Información",
             mensaje: "Es un honor darte la más cordial bienvenida a Univive. Tu incorporación representa un gran impulso para nuestros proyectos.",
             remitente: "Lic. Marcela Ruiz Castañeda",
             cargoRemitente: "Directora de Gestión de Talento Univive",
-            firma: "firma.png"
+            firma: "marcela.jpg"
         }
     });
     await nuevoRegistro.save();
